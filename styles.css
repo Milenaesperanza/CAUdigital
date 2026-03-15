@@ -1,0 +1,1378 @@
+/* =============================================
+   CAU Digital — styles.css
+   Estética: industrial-urbana, oscura, sólida
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #0a0f14;
+  --surface: rgba(255,255,255,0.93);
+  --surface-dark: rgba(15,25,40,0.85);
+  --text: #0f172a;
+  --text-muted: #475569;
+  --white: #ffffff;
+  --primary: #028a85;
+  
+  --primary-dark: #027570;
+
+  --ok: #16a34a;
+  --warn: #d97706;
+  --bad: #dc2626;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*{ box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-y: auto;
+}
+
+.app {
+  min-height: 100%;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* =============================================
+   HERO
+   ============================================= */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background-image: url("https://metrovias.com.ar/wp-content/uploads/2019/04/urquiza_6.jpg");
+  background-size: cover;
+  background-position: top center;
+  padding: 0 0 32px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5,10,18,0.25) 0%,
+    rgba(5,10,18,0.45) 35%,
+    rgba(5,10,18,0.80) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 40px 18px 0;
+  display: grid;
+  gap: 16px;
+}
+
+/* =============================================
+   MARCA / BRAND
+   ============================================= */
+
+.brand-header {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.brand-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 15vw, 80px);
+  line-height: 0.95;
+  color: var(--white);
+  letter-spacing: 2px;
+}
+
+.brand-accent {
+  color: #f4b400;
+}
+
+.brand-tagline {
+  font-size: 13px;
+  color: #ffffff;
+  margin-top: 8px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+
+.card {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.status-text {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: #e2e8f0;
+  color: var(--text);
+  border: 1px solid #cbd5e1;
+}
+
+.badge.ok  { background: rgba(22,163,74,0.12); color: #14532d; border-color: rgba(22,163,74,0.4); }
+.badge.warn{ background: rgba(217,119,6,0.12);  color: #451a03; border-color: rgba(217,119,6,0.4); }
+.badge.bad { background: rgba(220,38,38,0.12);  color: #450a0a; border-color: rgba(220,38,38,0.4); }
+
+/* Status detail rows */
+.status-detail {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.detail-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.detail-text {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.tip-row {
+  background: rgba(3,187,180,0.06);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  border: 1px solid rgba(3,187,180,0.15);
+}
+
+.meta {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+.meta-left {
+  display: inline;
+  white-space: nowrap;
+}
+
+.meta strong {
+  color: var(--text);
+}
+
+.meta-link {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 11px;
+}
+
+/* =============================================
+   ACCIONES
+   ============================================= */
+
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+.btn {
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  transition: opacity 0.15s, transform 0.1s;
+  text-align: center;
+}
+
+.btn:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.btn.primary {
+  background: #028a85;
+  color: white;
+}
+
+.btn.primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn.ghost {
+  background: rgba(255,255,255,0.12);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(4px);
+}
+
+.btn.ghost:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* =============================================
+   BRAND FOOTER (logo institucional)
+   ============================================= */
+
+.brand-footer {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+  opacity: 0.75;
+}
+
+.logo-img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* =============================================
+   DEMO PANEL
+   ============================================= */
+
+.demo-panel {
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px dashed rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.3);
+}
+
+.demo-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   SELECT / TEXTAREA
+   ============================================= */
+
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='rgba(255,255,255,0.85)' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+.select option {
+  background: #2d3748;
+  color: white;
+}
+
+/* Selects e inputs en pantallas interiores — más sólidos */
+#tripScreen .select,
+#tripScreen .input-datetime,
+#accessScreen .select,
+#claimScreen .select,
+#claimScreen .input-datetime,
+#claimScreen .textarea {
+  background-color: rgba(0, 0, 0, 0.45);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='rgba(255,255,255,0.85)' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+#tripScreen .input-datetime,
+#claimScreen .input-datetime,
+#claimScreen .textarea {
+  background-image: none;
+}
+
+#tripScreen .select:focus,
+#tripScreen .input-datetime:focus,
+#claimScreen .select:focus,
+#claimScreen .input-datetime:focus,
+#claimScreen .textarea:focus {
+  border-color: #028a85;
+  outline: none;
+}
+
+.select option {
+  background: #1e293b;
+  color: white;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.textarea::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+/* =============================================
+   PANTALLAS (navegación)
+   ============================================= */
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* =============================================
+   INNER SCREENS (viaje, accesibilidad, reclamo)
+   ============================================= */
+
+.inner-screen {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0f14 0%, #111827 100%);
+  padding: 0 18px 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+/* Trip screen gets the hero photo */
+#tripScreen {
+  min-height: 100vh;
+  position: relative;
+  background: #0a0f14;
+}
+
+#tripScreen::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://metrovias.com.ar/wp-content/uploads/2019/04/urquiza_6.jpg");
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#tripScreen .inner-screen {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 18px 40px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+#claimScreen {
+  min-height: 100vh;
+  position: relative;
+  background: #0a0f14;
+}
+
+#claimScreen::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://metrovias.com.ar/wp-content/uploads/2019/04/urquiza_6.jpg");
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#claimScreen .inner-screen {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 18px 40px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+#accessScreen {
+  min-height: 100vh;
+  position: relative;
+  background: #0a0f14;
+}
+
+#accessScreen::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("https://metrovias.com.ar/wp-content/uploads/2019/04/urquiza_6.jpg");
+  background-size: cover;
+  background-position: top center;
+  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#accessScreen .inner-screen {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 18px 40px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.inner-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 0 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 4px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.btn-back:hover {
+  color: white;
+}
+
+.inner-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.5px;
+  color: white;
+  line-height: 1;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: -6px;
+}
+
+/* Result card */
+.result-card {
+  background: var(--surface);
+}
+
+.result-time {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: #028a85;
+  margin: 4px 0 0;
+}
+
+/* =============================================
+   ACCESIBILIDAD
+   ============================================= */
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip.active,
+.chip:hover {
+  background: rgba(3,187,180,0.5);
+  border-color: rgba(3,187,180,0.8);
+  color: white;
+}
+
+.stations-list {
+  display: grid;
+  gap: 10px;
+}
+
+.station-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px;
+  color: var(--text);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.station-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.station-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: var(--text);
+}
+
+.pill.ok  { background: rgba(22,163,74,0.1);  border-color: rgba(22,163,74,0.4);  color: #14532d; }
+.pill.bad { background: rgba(220,38,38,0.1);  border-color: rgba(220,38,38,0.4);  color: #450a0a; }
+
+.pill-note {
+  font-weight: 400;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* =============================================
+   CONFIRMACIÓN RECLAMO
+   ============================================= */
+
+.confirm-card {
+  background: rgba(22,163,74,0.1);
+  border: 1px solid rgba(22,163,74,0.4);
+}
+
+.confirm-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #14532d;
+  margin-bottom: 6px;
+}
+
+.confirm-code {
+  font-size: 13px;
+  color: #334155;
+  font-weight: 500;
+}
+
+/* =============================================
+   ORIGEN / DESTINO
+   ============================================= */
+
+.od-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.od-field {
+  display: grid;
+  gap: 6px;
+}
+
+/* =============================================
+   FECHA / HORA
+   ============================================= */
+
+.datetime-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.datetime-field {
+  display: grid;
+  gap: 6px;
+}
+
+.input-datetime {
+  width: 100%;
+  padding: 12px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  color-scheme: dark;
+}
+
+/* =============================================
+   DESCARGA PDF
+   ============================================= */
+
+.pdf-download-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-top: 4px;
+}
+
+.pdf-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pdf-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.pdf-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+}
+
+.pdf-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 2px;
+}
+
+.btn-pdf {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: #028a85;
+  color: white;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.btn-pdf:hover {
+  background: var(--primary-dark);
+}
+
+/* =============================================
+   PRÓXIMOS TRENES
+   ============================================= */
+
+.trains-list {
+  display: grid;
+  gap: 10px;
+}
+
+.train-card {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: background 0.15s;
+}
+
+.train-next {
+  border-color: rgba(255,255,255,0.18);
+}
+
+.train-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Badge PRÓXIMO — mejor contraste */
+.train-badge-next {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: white;
+  background: #028a85;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+.train-direction {
+  font-weight: 700;
+  font-size: 15px;
+  color: white;
+}
+
+.train-platform {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+}
+
+.train-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.train-time {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: white;
+  line-height: 1;
+}
+
+.train-eta {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+.train-eta-highlight {
+  color: #4ade80;
+}
+
+/* Llegada — más visible */
+.train-arrival {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.train-arrival strong {
+  color: white;
+  font-size: 15px;
+}
+
+.train-arrival-icon {
+  font-size: 13px;
+}
+
+.train-delay-note {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fcd34d;
+  background: rgba(217,119,6,0.15);
+  border-radius: 999px;
+  padding: 2px 6px;
+  margin-left: 4px;
+}
+
+.trains-updated {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.train-cancelled {
+  background: rgba(220,38,38,0.1);
+  border: 1px solid rgba(220,38,38,0.3);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  color: #fca5a5;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.train-cancelled-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  margin-top: 6px;
+}
+
+/* Alerta de estado en pantalla viaje */
+.trip-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  border: 1px solid;
+}
+
+.alert-warn {
+  background: rgba(217,119,6,0.12);
+  border-color: rgba(217,119,6,0.4);
+  color: #fcd34d;
+}
+
+.alert-bad {
+  background: rgba(220,38,38,0.1);
+  border-color: rgba(220,38,38,0.35);
+  color: #fca5a5;
+}
+
+.trip-alert-icon { font-size: 16px; flex-shrink: 0; }
+.trip-alert-text { font-size: 13px; font-weight: 600; line-height: 1.4; }
+
+.trip-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255,255,255,0.35);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =============================================
+   HISTORIAL DE RECLAMOS
+   ============================================= */
+
+.history-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 6px;
+}
+
+.history-empty {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 20px 0;
+}
+
+.history-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: grid;
+  gap: 4px;
+}
+
+.history-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-type {
+  font-weight: 800;
+  font-size: 13px;
+  color: white;
+}
+
+.history-date {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.history-station {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+}
+
+.history-detail {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.4;
+}
+
+.history-code {
+  font-size: 11px;
+  color: #028a85;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* =============================================
+   MODAL CURIOSIDAD
+   ============================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-box {
+  background: #2d3340;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.modal-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f4b400;
+  margin-bottom: 14px;
+}
+
+.modal-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.9);
+  font-weight: 400;
+}
+
+.modal-footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* =============================================
+   RECLAMOS — nuevos estilos
+   ============================================= */
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(255,255,255,0.4);
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.file-upload-label:hover {
+  background: rgba(0, 0, 0, 0.60);
+}
+
+.file-upload-icon { font-size: 18px; }
+
+.file-input {
+  display: none;
+}
+
+.photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.photo-chip {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(3,187,180,0.2);
+  border: 1px solid rgba(3,187,180,0.4);
+  color: #93c5fd;
+}
+
+.claim-modal-code {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: #4ade80;
+  letter-spacing: 2px;
+  margin: 10px 0 0;
+}
+
+/* Toggle Queja/Sugerencia */
+.toggle-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.toggle-btn {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggle-btn.active {
+  background: #028a85;
+  border-color: #028a85;
+  color: white;
+}
+
+/* Contador caracteres */
+.char-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  float: right;
+}
+
+/* Error de campo */
+.field-error {
+  font-size: 12px;
+  color: #fca5a5;
+  font-weight: 600;
+  margin-top: -4px;
+}
+
+/* =============================================
+   CUSTOM SELECT — Origen/Destino
+   ============================================= */
+
+.custom-select {
+  position: relative;
+  width: 100%;
+  user-select: none;
+  z-index: 10;
+}
+
+.custom-select.open {
+  z-index: 50;
+}
+
+.cs-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.35);
+  background-color: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.cs-trigger:hover {
+  border-color: rgba(255,255,255,0.55);
+}
+
+.custom-select.open .cs-trigger {
+  border-color: #028a85;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.cs-value {
+  color: white;
+  font-family: var(--font-body);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cs-value.placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.cs-arrow {
+  width: 14px;
+  height: 9px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+
+.custom-select.open .cs-arrow {
+  transform: rotate(180deg);
+}
+
+.cs-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #2d3340;
+  border: 1px solid #028a85;
+  border-top: none;
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.custom-select.open .cs-dropdown {
+  display: block;
+}
+
+.cs-option {
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: background 0.1s;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.cs-option:last-child {
+  border-bottom: none;
+}
+
+.cs-option:hover {
+  background: rgba(2,138,133,0.25);
+  color: white;
+}
+
+.cs-option.selected {
+  background: rgba(2,138,133,0.35);
+  color: white;
+  font-weight: 700;
+}
+
+.cs-option.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+.cs-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+.cs-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+.cs-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+/* Footer copyright */
+.app-footer {
+  text-align: center;
+  padding: 8px 0 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-footer p {
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* Mensaje interrupción mejorado */
+.train-cancelled-title {
+  font-weight: 800;
+  font-size: 16px;
+  color: #fca5a5;
+  margin-bottom: 8px;
+}
+
+.train-cancelled-eta {
+  font-size: 13px;
+  color: #fcd34d;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.train-cancelled-update {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 6px;
+}
+
+.train-badge-today {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: white;
+  background: #028a85;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+.train-badge-day {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: white;
+  background: #475569;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+  width: fit-content;
+}
