@@ -1224,6 +1224,33 @@ if (sendClaimBtn) {
 
     await saveClaim(claim);
 
+    // Enviar email de confirmación
+    try {
+      const emailRes = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email:    claim.email,
+          nombre:   claim.name,
+          codigo:   claim.id,
+          tramite:  TRAMITE_LABELS[claim.tramite] ?? claim.tramite,
+          lugar:    LUGAR_LABELS[claim.lugar] ?? claim.lugar,
+          estacion: claim.station ? (STATION_LABELS[claim.station] ?? claim.station) : null,
+          fecha:    claim.date,
+          hora:     claim.time,
+        })
+      });
+      const emailData = await emailRes.json();
+      if (!emailRes.ok) {
+        sendClaimBtn.disabled    = false;
+        sendClaimBtn.textContent = "Enviar tu queja o sugerencia";
+        alert(emailData.error || "No pudimos verificar el email, chequealo para terminar tu gestión.");
+        return;
+      }
+    } catch (err) {
+      console.warn("Error enviando email:", err);
+    }
+
     sendClaimBtn.disabled    = false;
     sendClaimBtn.textContent = "Enviar tu queja o sugerencia";
 
