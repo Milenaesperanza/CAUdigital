@@ -1199,7 +1199,7 @@ body {
   position: relative;
   width: 100%;
   user-select: none;
-  z-index: 10;
+  z-index: 1;
 }
 
 .custom-select.open {
