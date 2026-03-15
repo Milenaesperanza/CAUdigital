@@ -238,7 +238,7 @@ body {
   color: #2563eb;
   font-weight: 700;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 /* =============================================
@@ -807,7 +807,8 @@ body {
 }
 
 .train-next {
-  border-color: rgba(255,255,255,0.18);
+  background: rgba(2,138,133,0.2);
+  border-color: rgba(2,138,133,0.45);
 }
 
 .train-left {
@@ -902,21 +903,36 @@ body {
 }
 
 .train-cancelled {
-  background: rgba(220,38,38,0.1);
-  border: 1px solid rgba(220,38,38,0.3);
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(220,38,38,0.6);
   border-radius: var(--radius);
   padding: 20px;
-  text-align: center;
-  color: #fca5a5;
-  font-weight: 700;
-  font-size: 15px;
+  display: grid;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.train-cancelled-title {
+  font-weight: 800;
+  font-size: 16px;
+  color: white;
 }
 
 .train-cancelled-sub {
   font-size: 13px;
-  font-weight: 400;
-  color: rgba(255,255,255,0.5);
-  margin-top: 6px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+.train-cancelled-eta {
+  font-size: 13px;
+  color: #fcd34d;
+  font-weight: 600;
+}
+
+.train-cancelled-update {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
 }
 
 /* Alerta de estado en pantalla viaje */
@@ -930,14 +946,14 @@ body {
 }
 
 .alert-warn {
-  background: rgba(217,119,6,0.12);
-  border-color: rgba(217,119,6,0.4);
+  background: rgba(217,119,6,0.18);
+  border-color: rgba(217,119,6,0.6);
   color: #fcd34d;
 }
 
 .alert-bad {
-  background: rgba(220,38,38,0.1);
-  border-color: rgba(220,38,38,0.35);
+  background: rgba(220,38,38,0.18);
+  border-color: rgba(220,38,38,0.65);
   color: #fca5a5;
 }
 
@@ -1262,13 +1278,11 @@ body {
   right: 0;
   background: #2d3340;
   border: 1px solid #028a85;
-  border-top: none;
-  border-bottom-left-radius: var(--radius-sm);
-  border-bottom-right-radius: var(--radius-sm);
+  border-radius: var(--radius-sm);
   max-height: 240px;
   overflow-y: auto;
-  z-index: 100;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
 }
 
 .custom-select.open .cs-dropdown {
@@ -1333,26 +1347,6 @@ body {
 }
 
 /* Mensaje interrupción mejorado */
-.train-cancelled-title {
-  font-weight: 800;
-  font-size: 16px;
-  color: #fca5a5;
-  margin-bottom: 8px;
-}
-
-.train-cancelled-eta {
-  font-size: 13px;
-  color: #fcd34d;
-  font-weight: 600;
-  margin-top: 8px;
-}
-
-.train-cancelled-update {
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  margin-top: 6px;
-}
-
 .train-badge-today {
   font-size: 10px;
   font-weight: 800;
@@ -1375,4 +1369,78 @@ body {
   border-radius: 999px;
   padding: 3px 10px;
   width: fit-content;
+}
+
+/* Fix claimStationBox label visibility */
+#claimStationBox {
+  padding-top: 4px;
+}
+
+#claimStationBox {
+  margin-top: 8px;
+}
+
+/* =============================================
+   MOBILE FIXES — iPhone y pantallas angostas
+   ============================================= */
+
+@media (max-width: 430px) {
+  .inner-screen {
+    padding: 0 12px 40px;
+  }
+
+  .od-row,
+  .datetime-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .input-datetime {
+    font-size: 12px;
+    padding: 10px 6px;
+  }
+
+  .od-field .cs-trigger,
+  .datetime-field .input-datetime {
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+
+  .cs-value {
+    font-size: 13px;
+  }
+
+  .pdf-download-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btn-pdf {
+    width: 100%;
+    text-align: center;
+  }
+
+  .inner-header {
+    padding: 16px 0 4px;
+  }
+
+  .inner-title {
+    font-size: 22px;
+  }
+}
+
+/* Fix inputs nativos en iOS Safari */
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  color: white;
+  color-scheme: dark;
+  min-height: 44px;
+}
+
+input[type="date"]::-webkit-date-and-time-value,
+input[type="time"]::-webkit-date-and-time-value {
+  color: white;
+  text-align: left;
 }

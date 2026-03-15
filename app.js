@@ -4,6 +4,41 @@
 */
 
 // =============================================
+// SUPABASE CONFIG
+// =============================================
+const SUPABASE_URL = "https://rymhpvztvfxvqekpkkiz.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5bWhwdnp0dmZ4dnFla3Bra2l6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1OTc0MzcsImV4cCI6MjA4OTE3MzQzN30.j6ByiWhOzEWDa2weIahxvRy-6YTY8fQ0W3ISyZNIK6Q";
+
+async function supabaseInsert(table, data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Prefer": "return=representation"
+    },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+  return res.json();
+}
+
+async function supabaseSelect(table, filter = "") {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}&order=created_at.desc`, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`
+    }
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+// =============================================
 // REFERENCIAS AL DOM
 // =============================================
 
@@ -104,7 +139,6 @@ function buildCustomSelect(wrapperId, dropdownId, triggerId, valueId, hiddenId, 
   trigger.addEventListener("click", (e) => {
     e.stopPropagation();
     const isOpen = wrapper.classList.contains("open");
-    // Close all open dropdowns
     document.querySelectorAll(".custom-select.open").forEach(el => el.classList.remove("open"));
     if (!isOpen) {
       renderOptions();
@@ -656,7 +690,7 @@ function renderNextTrains(originKey, destKey, baseDate) {
       <div class="train-cancelled">
         <p class="train-cancelled-title">Servicio Interrumpido</p>
         <p class="train-cancelled-sub">No hay trenes disponibles en este momento. Nuestros colaboradores se encuentran trabajando para restablecer el servicio.</p>
-        <p class="train-cancelled-eta">⏱ Demora estimada: ${scenario.eta}</p>
+        <p class="train-cancelled-eta">⏱ ${scenario.eta}</p>
         <p class="train-cancelled-update">Última actualización: ${nowPretty()}</p>
       </div>`;
     if (trainsUpdated) trainsUpdated.textContent = "";
@@ -683,14 +717,9 @@ function renderNextTrains(originKey, destKey, baseDate) {
   const isToday2   = baseDate.toDateString() === nowRef.toDateString();
   const isNearNow  = isToday2 && (baseDate - nowRef) < 60 * 60 * 1000;
 
-  // Badge según contexto temporal
-  const DAY_SHORT = ["DOM","LUN","MAR","MIÉ","JUE","VIE","SÁB"];
-
-  function getBadge(idx, waitMins) {
+  function getBadge(idx) {
     if (isNearNow && idx === 0) return `<span class="train-badge-next">PRÓXIMO</span>`;
-    if (isToday2) return `<span class="train-badge-today">HOY</span>`;
-    const dayLabel = DAY_SHORT[baseDate.getDay()];
-    return `<span class="train-badge-day">${dayLabel}</span>`;
+    return "";
   }
 
   const ETA_COLORS = ["#4ade80", "#fbbf24", "#fb923c"];
@@ -707,7 +736,7 @@ function renderNextTrains(originKey, destKey, baseDate) {
     return `
       <div class="train-card">
         <div class="train-left">
-          ${getBadge(idx, t.waitMins)}
+          ${getBadge(idx)}
           <p class="train-direction">${t.direction}</p>
           <p class="train-platform">${t.platform} ${delayNote}</p>
         </div>
@@ -779,8 +808,8 @@ if (backHomeFromAccessBtn) backHomeFromAccessBtn.addEventListener("click", () =>
 if (ctaClaimBtn) {
   ctaClaimBtn.addEventListener("click", () => {
     goTo("claim");
-    if (claimConfirmation) claimConfirmation.style.display = "none";
-    renderClaimHistory();
+    if (claimModal) claimModal.style.display = "none";
+    renderClaimHistory(JSON.parse(localStorage.getItem("cau_claims") || "[]"));
   });
 }
 if (backHomeFromClaimBtn) backHomeFromClaimBtn.addEventListener("click", () => goTo("home"));
@@ -865,15 +894,57 @@ function makeClaimId() {
   return `QF-${String(Math.floor(Math.random() * 9000) + 1000)}`;
 }
 
-function saveClaim(claim) {
+async function saveClaim(claim) {
+  // Guardar en Supabase
+  try {
+    await supabaseInsert("reclamos", {
+      codigo:   claim.id,
+      tipo:     claim.type,
+      tramite:  claim.tramite,
+      lugar:    claim.lugar,
+      estacion: claim.station || null,
+      fecha:    claim.date,
+      hora:     claim.time,
+      detalle:  claim.detail,
+      nombre:   claim.name,
+      email:    claim.email,
+    });
+  } catch (err) {
+    console.warn("Error guardando en Supabase, usando localStorage:", err);
+    // Fallback a localStorage
+    const key     = "cau_claims";
+    const current = JSON.parse(localStorage.getItem(key) || "[]");
+    current.unshift(claim);
+    localStorage.setItem(key, JSON.stringify(current));
+  }
+  // También guardamos en localStorage como backup
   const key     = "cau_claims";
   const current = JSON.parse(localStorage.getItem(key) || "[]");
   current.unshift(claim);
   localStorage.setItem(key, JSON.stringify(current));
 }
 
-function loadClaims() {
-  return JSON.parse(localStorage.getItem("cau_claims") || "[]");
+async function loadClaims(email) {
+  try {
+    // Traer reclamos del usuario por email desde Supabase
+    const data = await supabaseSelect("reclamos", `email=eq.${encodeURIComponent(email)}`);
+    return data.map(r => ({
+      id:        r.codigo,
+      type:      r.tipo,
+      tramite:   r.tramite,
+      lugar:     r.lugar,
+      station:   r.estacion,
+      date:      r.fecha,
+      time:      r.hora,
+      detail:    r.detalle,
+      name:      r.nombre,
+      email:     r.email,
+      createdAt: r.created_at,
+    }));
+  } catch (err) {
+    console.warn("Error cargando desde Supabase, usando localStorage:", err);
+    return JSON.parse(localStorage.getItem("cau_claims") || "[]");
+  }
 }
 
 const TRAMITE_LABELS = {
@@ -909,11 +980,10 @@ function formatDate(iso) {
   return `${dd}/${mm} ${hh}:${min}`;
 }
 
-function renderClaimHistory() {
+function renderClaimHistory(claims) {
   const historyBox = document.getElementById("claimHistory");
   if (!historyBox) return;
-  const claims = loadClaims();
-  if (claims.length === 0) {
+  if (!claims || claims.length === 0) {
     historyBox.innerHTML = `<p class="history-empty">Todavía no enviaste gestiones.</p>`;
     return;
   }
@@ -928,6 +998,13 @@ function renderClaimHistory() {
       <p class="history-code">${c.id}</p>
     </div>
   `).join("");
+}
+
+async function loadAndRenderHistory(email) {
+  const historyBox = document.getElementById("claimHistory");
+  if (historyBox) historyBox.innerHTML = `<p class="history-empty">Cargando...</p>`;
+  const claims = await loadClaims(email);
+  renderClaimHistory(claims);
 }
 
 // =============================================
@@ -1113,7 +1190,7 @@ if (claimModal) claimModal.addEventListener("click", e => { if (e.target === cla
 // Enviar
 const sendClaimBtn = document.getElementById("sendClaimBtn");
 if (sendClaimBtn) {
-  sendClaimBtn.addEventListener("click", () => {
+  sendClaimBtn.addEventListener("click", async () => {
     const type    = claimTypeInput?.value;
     const tramite = claimTramite?.value;
     const lugar   = claimLugar?.value;
@@ -1134,15 +1211,21 @@ if (sendClaimBtn) {
     if (!email)                { alert("Ingresá tu e-mail."); return; }
     if (!isValidEmail(email))  { alert("El e-mail no tiene un formato válido. Usá dirección@email.com"); return; }
 
+    sendClaimBtn.disabled    = true;
+    sendClaimBtn.textContent = "Enviando...";
+
     const claim = {
       id: makeClaimId(),
       type, tramite, lugar,
       station: lugar === "estacion" ? station : null,
-      date, time, detail, email,
+      date, time, detail, name, email,
       createdAt: new Date().toISOString(),
     };
 
-    saveClaim(claim);
+    await saveClaim(claim);
+
+    sendClaimBtn.disabled    = false;
+    sendClaimBtn.textContent = "Enviar tu queja o sugerencia";
 
     if (claimModalCode) claimModalCode.textContent = claim.id;
     if (claimModal) { claimModal.style.display = "flex"; document.body.style.overflow = "hidden"; }
@@ -1158,11 +1241,12 @@ if (sendClaimBtn) {
     if (document.getElementById("claimDate")) document.getElementById("claimDate").value = "";
     if (document.getElementById("claimTime")) document.getElementById("claimTime").value = "";
     if (claimDetailEl) claimDetailEl.value = "";
+    if (document.getElementById("claimName")) document.getElementById("claimName").value = "";
     if (claimEmailEl)  claimEmailEl.value  = "";
     if (photoPreview)  photoPreview.innerHTML = "";
     if (charCount)     charCount.textContent = "0/30 mín.";
 
-    renderClaimHistory();
+    loadAndRenderHistory(email);
   });
 }
 
