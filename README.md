@@ -25,8 +25,11 @@ En CAU Digital podés:
 Las opciones disponibles son:
 
 Ver más → información ampliada del servicio
+
 Planificar viaje → herramientas para organizar tu recorrido
+
 Horarios → consulta de horarios de trenes
+
 Otros servicios → accesos adicionales relacionados con el sistema
 
 Acceso:
