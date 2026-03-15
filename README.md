@@ -9,8 +9,11 @@ La página muestra información actualizada del servicio y ofrece distintas acci
 En CAU Digital podés:
 
 -Ver el estado actual del servicio
+
 -Planificar un viaje
+
 -Consultar horarios
+
 -Acceder a más información del servicio
 
 ¿Cómo usar la aplicación?
